@@ -1,0 +1,52 @@
+version: 2
+models: 
+  - name: sales_analysis
+    description: Table containing data that can be used for sales analysis 
+    columns: 
+      - name: date
+        description: purchase date 
+      - name: product_id
+        description: unique identifier of the product
+      - name: product_name
+        description: name of the product 
+      - name: quantity
+        description: quantity of the product bought
+      - name: price
+        description: price of each product
+  - name: user_retention
+    description: Table containing data that can be used for analysing the how well the store has been able to retain users 
+    columns: 
+      - name: user_id
+        description: unique identifier of each user
+      - name: first_purchase_date
+        description: first date the user purchased product(s) from the store
+      - name: last_purchase_date
+        description: the most recent date the user purchased product(s) from the store
+  - name: cart_analysis
+    description: Table containing data where the cart of each user is empty per date
+    columns: 
+      - name: date
+        description: date 
+      - name: user_id
+        description: unique identifier of each user
+      - name: cart_id
+        description: unque identifier of each cart
+  - name: customers_analysis
+    description: Table containing data that can be used to analysis user engagements in the store
+    columns:
+      - name: user_id
+        description: unique identifier of each user
+      - name: product_id
+        description: unique identification of each product
+      - name: product_name
+        description: name of the product
+      - name: total_carts
+        description: frequency of purchase of each user based on the sum of unique carts addes by each user
+      - name: total_quantity
+        description: total quantity purchased by each user
+      - name:  total_amount
+        description: total amount spent by each user
+      - name: city
+        description:  location of each user
+      
+

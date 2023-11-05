@@ -1,0 +1,12 @@
+Fakestore:
+    target: dev
+    outputs:
+        dev:
+            type: postgres
+            host: host.docker.internal
+            user: postgres
+            password: 'your postgres password'
+            port: 5432
+            dbname: Fakestore
+            schema: public
+            threads: 4

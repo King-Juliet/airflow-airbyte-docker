@@ -1,0 +1,16 @@
+version: 2
+sources: 
+    - name: FakestoreAPI
+      description: alias name for data source
+      database: Fakestore #database name on postgres
+      schema: public
+      tables:
+          - name: carts
+          - name: products
+          - name: users
+            columns:
+            - name: user_id
+              description: user unique Identifier
+              tests:
+                - not_null
+              
