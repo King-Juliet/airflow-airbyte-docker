@@ -20,7 +20,7 @@ echo "Airflow is running on https://localhost:8080"
 down(){
   # stop airbyte containers form running
   echo "Stopping airbyte....."
-  cd ../airbyte
+  cd airbyte
   docker-compose down
   #stop airflow containers from running
   echo "Stopping airflow...."
