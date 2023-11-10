@@ -32,7 +32,8 @@ def get_and_extract_fakestore_product_to_gcs(destination_gcs_path, url="https://
             #load data to gcs
             fs = gcsfs.GCSFileSystem(project='merch-store-399816')
             with fs.open(destination_gcs_path, 'wb') as f:
-                 df.to_parquet(f, index=False)
+                 #df.to_parquet(f, index=False)
+                 df.to_csv(f, index=False)
         else:
             print("No data available")
             return None
@@ -79,7 +80,8 @@ def get_and_extract_fakestore_cart_to_gcs(destination_gcs_path, url="https://fak
             #load data to gcs
             fs = gcsfs.GCSFileSystem(project='merch-store-399816')
             with fs.open(destination_gcs_path, 'wb') as f:
-                 df.to_parquet(f, index=False)
+                 #df.to_parquet(f, index=False)
+                 df.to_csv(f, index=False)
         else:
             print("No cart data available")
             return None
@@ -121,7 +123,8 @@ def get_and_extract_fakestore_users_to_gcs(destination_gcs_path, url="https://fa
             #load data to gcs
             fs = gcsfs.GCSFileSystem(project='merch-store-399816')
             with fs.open(destination_gcs_path, 'wb') as f:
-                 df.to_parquet(f, index=False)
+                 #df.to_parquet(f, index=False)
+                 df.to_csv(f, index=False)
         else:
             print("No user data available")
             return None
