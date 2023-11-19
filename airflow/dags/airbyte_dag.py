@@ -60,11 +60,11 @@ gcs_cart_to_postgres_task = AirbyteTriggerSyncOperator(
 wait_for_api_to_gcs_completion = ExternalTaskSensor(
     task_id='wait_for_api_to_gcs_dag_completion', #ID of this task
     external_dag_id='api_to_gcs_dag', #Dag id of the DAG to be completed first--api_to_gcs_dag.py
-    external_task_id= ['api_product_to_gcs_task', 'api_cart_to_gcs_task', 'api_user_to_gcs_task'], # task IDs in the first DAG to be completed
+    external_task_id= 'api_product_to_gcs_task, api_cart_to_gcs_task, api_user_to_gcs_task', # task IDs in the first DAG to be completed
     mode='reschedule',  # This means it will keep polling until the dependency is met
     poke_interval = 120,  # Interval between polling attempts
     dag = airbyte_dag,
 )
 
 #set tasks dependencies
-wait_for_api_to_gcs_completion >> chain([gcs_product_to_postgres_task, gcs_user_to_postgres_task, gcs_cart_to_postgres_task]) 
+chain(wait_for_api_to_gcs_completion,[gcs_product_to_postgres_task, gcs_user_to_postgres_task, gcs_cart_to_postgres_task]) 
