@@ -55,12 +55,13 @@ api_user_to_gcs_task = PythonOperator(
     dag = api_to_gcs_dag
 )
 
-#trigger_airbyte_dag_task = TriggerDagRunOperator(
-    #task_id ='trigger_airbyte_dag',
-    #trigger_dag_id = 'airbyte_trigger_dag', # Dag id of the dag to trigger -- airbyte_dag.py
-    #dag = api_to_gcs_dag
-#)
+trigger_airbyte_dag_task = TriggerDagRunOperator(
+    task_id ='trigger_airbyte_dag',
+    trigger_dag_id = 'airbyte_trigger_dag', # Dag id of the dag to trigger -- airbyte_dag.py
+    dag = api_to_gcs_dag,
+    wait_for_completion = True
+)
 
 #set task dependencies
 #chain([api_product_to_gcs_task, api_cart_to_gcs_task, api_user_to_gcs_task] trigger_airbyte_dag_task) 
-api_product_to_gcs_task >> api_cart_to_gcs_task >> api_user_to_gcs_task
+api_product_to_gcs_task >> api_cart_to_gcs_task >> api_user_to_gcs_task >> trigger_airbyte_dag_task

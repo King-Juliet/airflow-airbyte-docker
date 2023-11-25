@@ -1,6 +1,7 @@
 #imports
 from airflow import DAG
 from airflow.providers.airbyte.operators.airbyte import AirbyteTriggerSyncOperator
+from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 from airflow.operators.sensors import ExternalTaskSensor
 from airflow.models.baseoperator import chain
 from datetime import datetime, timedelta
@@ -57,16 +58,25 @@ gcs_cart_to_postgres_task = AirbyteTriggerSyncOperator(
 )
  
 
-wait_for_api_to_gcs_completion = ExternalTaskSensor(
-    task_id='wait_for_api_to_gcs_dag_completion', #ID of this task
-    external_dag_id='api_to_gcs_dag', #Dag id of the DAG to be completed first--api_to_gcs_dag.py
-    external_task_id= 'api_user_to_gcs', # task IDs in the first DAG to be completed
-    mode='reschedule',  # This means it will keep polling until the dependency is met
-    poke_interval = 60,  # Interval between polling attempts
+#Trigger dbt task
+trigger_dbt_dag_task = TriggerDagRunOperator(
+    task_id ='trigger_dbt_dag',
+    trigger_dag_id = 'dbt_build_dag', # Dag id of the dag to trigger -- airbyte_dag.py
     dag = airbyte_dag,
-    allowed_states = ['success']
+    wait_for_completion = True
 )
+
+#wait_for_api_to_gcs_completion = ExternalTaskSensor(
+    #task_id='wait_for_api_to_gcs_dag_completion', #ID of this task
+    #external_dag_id='api_to_gcs_dag', #Dag id of the DAG to be completed first--api_to_gcs_dag.py
+    #external_task_id= 'api_user_to_gcs', # task IDs in the first DAG to be completed
+    #mode='reschedule',  # This means it will keep polling until the dependency is met
+    #poke_interval = 60,  # Interval between polling attempts
+    #dag = airbyte_dag,
+    #allowed_states = ['success']
+#)
 
 #set tasks dependencies
 #chain(wait_for_api_to_gcs_completion,[gcs_product_to_postgres_task, gcs_user_to_postgres_task, gcs_cart_to_postgres_task]) 
-wait_for_api_to_gcs_completion >> [gcs_product_to_postgres_task, gcs_user_to_postgres_task, gcs_cart_to_postgres_task] 
+#wait_for_api_to_gcs_completion >> [gcs_product_to_postgres_task, gcs_user_to_postgres_task, gcs_cart_to_postgres_task] 
+[gcs_product_to_postgres_task, gcs_user_to_postgres_task, gcs_cart_to_postgres_task] >> trigger_dbt_dag_task
