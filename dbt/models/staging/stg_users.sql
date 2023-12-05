@@ -1,3 +1,6 @@
+-- light transformations: column name change, capitalization change, 
+-- column merge
+
 SELECT user_id AS user_id,
     username AS user_name,
     Email AS email,

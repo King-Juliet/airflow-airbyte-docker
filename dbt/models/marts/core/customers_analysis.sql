@@ -1,3 +1,5 @@
+-- model for user shopping habits
+
 SELECT 
     {{ref('stg_users')}}.user_id,
     {{ref('stg_product')}}.product_id,

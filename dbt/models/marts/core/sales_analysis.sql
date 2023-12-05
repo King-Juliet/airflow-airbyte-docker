@@ -1,3 +1,5 @@
+-- model for product performance analytics
+
 SELECT date,
     {{ref('stg_product')}}.product_id,
     product_name,
