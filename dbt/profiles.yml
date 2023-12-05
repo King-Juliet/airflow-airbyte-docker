@@ -5,7 +5,7 @@ Fakestore:
             type: postgres
             host: host.docker.internal
             user: postgres
-            password: 'your postgres password'
+            password: 'your password'
             port: 5432
             dbname: Fakestore
             schema: public

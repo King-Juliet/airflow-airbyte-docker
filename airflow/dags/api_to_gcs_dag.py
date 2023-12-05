@@ -34,6 +34,8 @@ api_to_gcs_dag = DAG(
 )
 
 #extract data from fakestore api to gcs destination tasks
+
+#api_product_to_gcs_task
 api_product_to_gcs_task = PythonOperator(
     task_id = 'api_product_to_gcs',
     python_callable = get_and_extract_fakestore_product_to_gcs,
@@ -41,6 +43,7 @@ api_product_to_gcs_task = PythonOperator(
     dag = api_to_gcs_dag
 )
 
+#api_cart_to_gcs_task
 api_cart_to_gcs_task = PythonOperator(
     task_id = 'api_cart_to_gcs',
     python_callable = get_and_extract_fakestore_cart_to_gcs,
@@ -48,6 +51,7 @@ api_cart_to_gcs_task = PythonOperator(
     dag = api_to_gcs_dag
 )
 
+#api_user_to_gcs_task
 api_user_to_gcs_task = PythonOperator(
     task_id = 'api_user_to_gcs',
     python_callable = get_and_extract_fakestore_users_to_gcs,
@@ -55,6 +59,7 @@ api_user_to_gcs_task = PythonOperator(
     dag = api_to_gcs_dag
 )
 
+#Trigger airbyte task
 trigger_airbyte_dag_task = TriggerDagRunOperator(
     task_id ='trigger_airbyte_dag',
     trigger_dag_id = 'airbyte_trigger_dag', # Dag id of the dag to trigger -- airbyte_dag.py
@@ -63,5 +68,4 @@ trigger_airbyte_dag_task = TriggerDagRunOperator(
 )
 
 #set task dependencies
-#chain([api_product_to_gcs_task, api_cart_to_gcs_task, api_user_to_gcs_task] trigger_airbyte_dag_task) 
 api_product_to_gcs_task >> api_cart_to_gcs_task >> api_user_to_gcs_task >> trigger_airbyte_dag_task

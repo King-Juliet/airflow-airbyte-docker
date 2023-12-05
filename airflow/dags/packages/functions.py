@@ -11,6 +11,16 @@ import gcsfs
 #Extract from API to GCS functions
 
 def get_and_extract_fakestore_product_to_gcs(destination_gcs_path, url="https://fakestoreapi.com/products"):
+    """
+    This function extracts all products data from fakestore
+     using fakestore product API
+     
+     args:
+     destination_gcs_path: gcs path to load the extracted data
+     url: fakestore product API link
+     
+     """
+    
     response = requests.get(url)
 
     if response.status_code == 200:
@@ -46,6 +56,16 @@ def get_and_extract_fakestore_product_to_gcs(destination_gcs_path, url="https://
 #print(fakestore_product_data_df)
 
 def get_and_extract_fakestore_cart_to_gcs(destination_gcs_path, url="https://fakestoreapi.com/carts"):
+    """
+    This function extracts all cart data from fakestore
+     using fakestore cart API
+     
+     args:
+     destination_gcs_path: gcs path to load the extracted data
+     url: fakestore cart API link
+     
+     """
+    
     response = requests.get(url)
 
     if response.status_code == 200:
@@ -94,6 +114,16 @@ def get_and_extract_fakestore_cart_to_gcs(destination_gcs_path, url="https://fak
 #print(fakestore_cart_data_df)
 
 def get_and_extract_fakestore_users_to_gcs(destination_gcs_path, url="https://fakestoreapi.com/users", ):
+    """
+    This function extracts all users data from fakestore
+     using fakestore users API
+     
+     args:
+     destination_gcs_path: gcs path to load the extracted data
+     url: fakestore users API link
+     
+     """
+    
     response = requests.get(url)
 
     if response.status_code == 200:
