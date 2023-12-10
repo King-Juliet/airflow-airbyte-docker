@@ -8,5 +8,5 @@ Fakestore:
             password: 'your password'
             port: 5432
             dbname: Fakestore
-            schema: public
+            schema: airbyte
             threads: 4
