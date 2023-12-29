@@ -4,7 +4,11 @@ name: Fakestore
 version: '1.0.0'
 config-version: 2
 
-#This setting configures the profile that dbt will use for this project
+#This setting configures the profile that dbt will use for this project. When you invoke dbt from the command
+#line, dbt parses your dbt_project.yml and obtains the profile name, which dbt needs to connect to your
+#data warehouse. dbt checks your profile.yml file for a profile within the same name. 
+#A profile contains all the details needed to connect to your data warehouse. Hence, the name in 
+#your profile.yml file is the name you will specify here, profile: 'name'
 profile: 'Fakestore'
 
 #This configurations specify where dbt should look for different types of files. 
